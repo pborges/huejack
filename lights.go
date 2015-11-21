@@ -77,7 +77,7 @@ func getLightsList(w http.ResponseWriter, r *http.Request, _ httprouter.Params) 
 }
 
 func setLightState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	r.Body.Close()
+	defer r.Body.Close()
 	w.Header().Set("Content-Type", "application/json")
 	req := make(map[string]bool)
 	json.NewDecoder(r.Body).Decode(&req)
