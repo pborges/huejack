@@ -1,6 +1,6 @@
 package main
 import (
-	"github.com/pborges/huemulator/huejack"
+	"github.com/pborges/huejack"
 	"fmt"
 	"os"
 )
@@ -13,5 +13,7 @@ func main() {
 		state = !req.RequestedOnState
 		return req.RequestedOnState
 	})
+
+	// it is very important to use a full IP here or the UPNP does not work correctly.
 	huejack.ListenAndServe("192.168.2.102:5000")
 }
