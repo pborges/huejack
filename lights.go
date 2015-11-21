@@ -82,12 +82,13 @@ func setLightState(w http.ResponseWriter, r *http.Request, p httprouter.Params) 
 
 	l := initLight(p.ByName("lightId"))
 
-	log.Println("[DEVICE]", p.ByName("echoId"), "requested state:", req["on"])
+	log.Println("[DEVICE]", p.ByName("userId"), "requested state:", req["on"])
 	state := false;
 	if hstate, ok := handlerMap[p.ByName("lightId")]; ok {
 		state = hstate.Handler(Request{
-			EchoId:p.ByName("echoId"),
+			UserId:p.ByName("userId"),
 			RequestedOnState:req["on"],
+			RemoteAddr:r.RemoteAddr,
 		})
 		log.Println("[DEVICE] handler replied with state:", state)
 		hstate.OnState = state

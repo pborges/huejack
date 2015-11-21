@@ -2,6 +2,7 @@ package huejack
 
 
 type Request struct {
-	EchoId           string
+	UserId           string
 	RequestedOnState bool
+	RemoteAddr       string
 }

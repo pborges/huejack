@@ -9,7 +9,7 @@ import (
 func main() {
 	huejack.SetLogger(os.Stdin)
 	huejack.Handle("test", func(req huejack.Request) (state bool) {
-		fmt.Println("im handling test from", req.EchoId, req.RequestedOnState)
+		fmt.Println("im handling test from", req.RemoteAddr, req.RequestedOnState)
 		state = !req.RequestedOnState
 		return req.RequestedOnState
 	})

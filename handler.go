@@ -22,9 +22,9 @@ func ListenAndServe(addr string) {
 	router := httprouter.New()
 	router.GET(upnp_uri, upnpSetup(addr))
 
-	router.GET("/api/:echoId", getLightsList)
-	router.PUT("/api/:echoId/lights/:lightId/state", setLightState)
-	router.GET("/api/:echoId/lights/:lightId", getLightInfo)
+	router.GET("/api/:userId", getLightsList)
+	router.PUT("/api/:userId/lights/:lightId/state", setLightState)
+	router.GET("/api/:userId/lights/:lightId", getLightInfo)
 
 	go upnpResponder(addr, upnp_uri)
 	http.ListenAndServe(addr, requestLogger(router))
