@@ -30,7 +30,10 @@ func ListenAndServe(addr string) {
 	http.ListenAndServe(addr, requestLogger(router))
 }
 
-type Handler func(Request) (state bool)
+// Handler:
+// 	state is the state of the "light" after the handler function
+//  if error is set to true echo will reply with "sorry the device is not responding"
+type Handler func(Request) (state bool, error bool)
 
 func Handle(deviceName string, h Handler) {
 	log.Println("[HANDLE]", deviceName)

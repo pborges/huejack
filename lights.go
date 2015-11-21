@@ -82,12 +82,11 @@ func setLightState(w http.ResponseWriter, r *http.Request, p httprouter.Params) 
 	req := make(map[string]bool)
 	json.NewDecoder(r.Body).Decode(&req)
 
-	l := initLight(p.ByName("lightId"))
-
 	log.Println("[DEVICE]", p.ByName("userId"), "requested state:", req["on"])
-	state := false;
+	state := false
+	err := false
 	if hstate, ok := handlerMap[p.ByName("lightId")]; ok {
-		state = hstate.Handler(Request{
+		state, err = hstate.Handler(Request{
 			UserId:p.ByName("userId"),
 			RequestedOnState:req["on"],
 			RemoteAddr:r.RemoteAddr,
@@ -96,9 +95,9 @@ func setLightState(w http.ResponseWriter, r *http.Request, p httprouter.Params) 
 		hstate.OnState = state
 		handlerMap[p.ByName("lightId")] = hstate
 	}
-
-	// this is very ugly...
-	w.Write([]byte("[{\"success\":{\"/lights/" + l.UniqueId + "/state/on\":" + strconv.FormatBool(state) + "}}]"))
+	if !err {
+		w.Write([]byte("[{\"success\":{\"/lights/" + p.ByName("lightId") + "/state/on\":" + strconv.FormatBool(state) + "}}]"))
+	}
 }
 
 func getLightInfo(w http.ResponseWriter, r *http.Request, p httprouter.Params) {

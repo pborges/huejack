@@ -13,3 +13,7 @@ I wanted to remove alot of code that I felt was _voodoo_ magic.
 The only difference between this library and [this one](https://github.com/pborges/huemulator) is that in this library I attempted to emulate the golang http package and remove the need for a database of lights
 ### Example
 see ```examples/huejack.go```
+
+### Tips
+
+Returning true for error in a huejack.Handler will make the echo reply with "Sorry the device is not responding"
