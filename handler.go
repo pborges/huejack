@@ -43,6 +43,7 @@ func Handle(deviceName string, h Handler) {
 func requestLogger(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		log.Println("[WEB]", r.RemoteAddr, r.Method, r.URL)
+		//		log.Printf("\t%+v\n", r)
 		h.ServeHTTP(w, r)
 	})
 }

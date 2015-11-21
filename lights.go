@@ -68,6 +68,7 @@ func enumerateLights() lights {
 }
 
 func getLightsList(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	r.Body.Close()
 	w.Header().Set("Content-Type", "application/json")
 	err := json.NewEncoder(w).Encode(enumerateLights())
 	if err != nil {
@@ -76,6 +77,7 @@ func getLightsList(w http.ResponseWriter, r *http.Request, _ httprouter.Params) 
 }
 
 func setLightState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	r.Body.Close()
 	w.Header().Set("Content-Type", "application/json")
 	req := make(map[string]bool)
 	json.NewDecoder(r.Body).Decode(&req)
@@ -100,6 +102,7 @@ func setLightState(w http.ResponseWriter, r *http.Request, p httprouter.Params) 
 }
 
 func getLightInfo(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	r.Body.Close()
 	w.Header().Set("Content-Type", "application/json")
 
 	l := initLight(p.ByName("lightId"))
