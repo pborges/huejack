@@ -8,10 +8,10 @@ import (
 
 func main() {
 	huejack.SetLogger(os.Stdin)
-	huejack.Handle("test", func(req huejack.Request) (state bool, error bool) {
+	huejack.Handle("test", func(req huejack.Request, res *huejack.Response) {
 		fmt.Println("im handling test from", req.RemoteAddr, req.RequestedOnState)
-		state = req.RequestedOnState
-		//		error = true
+		res.OnState = req.RequestedOnState
+		//		res.ErrorState = true //set ErrorState to true to have the echo respond with "unable to reach device"
 		return
 	})
 
