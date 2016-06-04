@@ -1,4 +1,5 @@
 package huejack
+
 import (
 	"github.com/julienschmidt/httprouter"
 	"net/http"
@@ -6,6 +7,7 @@ import (
 	"io"
 	"io/ioutil"
 )
+
 var handlerMap map[string]huestate
 
 func init() {
@@ -18,7 +20,7 @@ func SetLogger(w io.Writer) {
 	log.SetOutput(w)
 }
 
-func ListenAndServe(addr string) {
+func ListenAndServe(addr string) error {
 	router := httprouter.New()
 	router.GET(upnp_uri, upnpSetup(addr))
 
@@ -27,7 +29,7 @@ func ListenAndServe(addr string) {
 	router.GET("/api/:userId/lights/:lightId", getLightInfo)
 
 	go upnpResponder(addr, upnp_uri)
-	http.ListenAndServe(addr, requestLogger(router))
+	return http.ListenAndServe(addr, requestLogger(router))
 }
 
 // Handler:
