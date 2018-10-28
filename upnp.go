@@ -104,6 +104,7 @@ func upnpResponder(hostAddr string, endpoint string) {
 				log.Fatal("[UPNP] execute template failed:", err)
 			}
 			c.Write(b.Bytes())
+			c.Close()
 		}
 	}
 }
